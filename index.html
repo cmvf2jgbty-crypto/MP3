@@ -1,0 +1,11 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MP3 文件与电脑连接</title><meta name="description" content="选择本地 MP3、下载曲库并连接电脑串口。"><link rel="stylesheet" href="style.css"></head><body><main>
+<h1>MP3 文件与电脑连接</h1>
+<section aria-labelledby="music-title"><h2 id="music-title">MP3 文件下载</h2><label class="drop" id="drop"><strong>选择或拖入 MP3 文件</strong><input id="files" type="file" accept="audio/mpeg,.mp3" multiple><span>仅在本机处理，不上传文件</span></label>
+<p><label for="layout">已安装的播放器版本：</label><select id="layout"><option value="7667712" selected>扩容版 · 7.3125 MiB（需先升级固件）</option><option value="5242880">原版 · 5 MiB</option></select></p><div class="list-head"><strong>文件列表</strong><span id="usage">0 / 7.3125 MiB</span></div><ol id="list"><li class="empty">选择本地 MP3 后，可试听或下载原文件。</li></ol><audio id="audio" controls></audio>
+<p class="note">最多 32 首，曲库容量按所选固件计算，最高 7.3125 MiB。设备歌名建议使用英文；打包不会转换音频格式。</p>
+<div class="actions"><button id="pack" disabled>下载设备曲库 music.bin</button><button id="clear" class="secondary">清空文件</button></div><p id="message" role="status"></p></section>
+<section aria-labelledby="computer-title"><h2 id="computer-title">连接主机电脑</h2><p>用 USB 数据线连接 AI Passport 和电脑，在电脑 Chrome 或 Edge 浏览器中选择设备。</p>
+<div class="actions"><button id="connect">连接 USB 串口</button><button id="disconnect" class="secondary" disabled>断开连接</button></div><p id="connection" role="status">尚未连接设备。</p>
+<details><summary>将曲库写入设备</summary><ol class="steps"><li>下载上方的 music.bin，点击“断开连接”，关闭其他占用设备串口的程序。</li><li>在已安装 esptool 的电脑终端进入文件目录，把下面的 COM端口 替换为实际设备端口后运行：</li></ol>
+<code id="write-command">python -m esptool --chip esp32c3 --port COM端口 write-flash 0xb0000 music.bin</code><p class="note">扩容版须先安装对应固件，并在新地址重新写入曲库；原版不能使用扩容版地址。写入后重启设备。此操作替换原有曲库；网页连接按钮只连接串口，不传输歌曲。</p></details></section>
+</main><script src="app.js"></script></body></html>
